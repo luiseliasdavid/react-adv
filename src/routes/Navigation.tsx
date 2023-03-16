@@ -1,3 +1,5 @@
+
+import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, NavLink } from "react-router-dom";
 
@@ -6,6 +8,7 @@ import { routes } from "./routes";
 
 export const Navigation = () => {
   return (
+    <Suspense fallback={<span>Loading..</span>}>
     <BrowserRouter>
       <div className="main-layout">
         <nav>
@@ -35,5 +38,5 @@ export const Navigation = () => {
         </Routes>
       </div>
     </BrowserRouter>
-  );
+  </Suspense>);
 };
