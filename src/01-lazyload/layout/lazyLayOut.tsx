@@ -7,7 +7,7 @@ import { LazyPages1, LazyPages2, LazyPages3 } from '../pages';
 export const LazyLayOut = () => {
   return (
     <div>
-      <h1>Lazy Layout Page</h1>
+      <h1>Lazy LayOut Page</h1>
 
        <ul>
            <li>
