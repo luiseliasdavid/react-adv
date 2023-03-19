@@ -1,66 +1,35 @@
 import styles from "../styles/styles.module.css";
-import noImage from "../assets/no-image.jpg";
-import { useProduct } from '../hooks/useProduct';
 
-interface Props {
-    product: Product
-}
-interface Product {
-    id:string;
-    title: string;
-    img?: string;
-}
+import { useProduct } from "../hooks/useProduct";
+import { createContext } from "react";
+import {
+  ProductContextProps,
+  ProductCardProps,
+} from "../interfaces/interfaces";
 
-export const ProductImage = ({img=''}) => {
-    return (
-        <img className={styles.productImg} src={ img? img : noImage} alt='Product' />
-    )
-}
-export const ProductTitle = ({title}:{title:string} ) => {
-    return (
-        <span className={styles.productDescription}> {title} </span>
-    )
-}
+export const ProductContext = createContext({} as ProductContextProps);
+const { Provider } = ProductContext;
 
-interface ProductButtonsProps {
-    counter:number;
-    increaseBy: (value: number) => void
-}
-
-export const ProductButtons = ( {counter, increaseBy}: ProductButtonsProps) => {
-
-    return(
-        <div className={styles.buttonsContainer}>
-
-        <button
-         className={styles.buttonMinus}
-         onClick={ ()=> increaseBy(-1) }
-         >-</button>
-
-        <button className={styles.countLabel}> {counter} </button>
-
-        <button 
-        className={styles.buttonAdd}
-        onClick={ ()=> increaseBy(+1) }
-        >+</button>
-
-      </div>
-    )
-}
-
-export const ProductCard = ({product}:Props) => {
-
-  const {counter, increaseBy}  = useProduct()
+export const ProductCard = ({ product, children }: ProductCardProps) => {
+  const { counter, increaseBy } = useProduct();
 
   return (
-    <div className={styles.productCard}>
-      
-      <ProductImage img={product.img} />
+    <Provider
+      value={{
+        counter,
+        increaseBy,
+        product,
+      }}
+    >
+      <div className={styles.productCard}>
+        {children}
+
+        {/* <ProductImage img={product.img} />
 
       <ProductTitle title={product.title}  />
 
-      <ProductButtons  counter={counter} increaseBy={increaseBy}  />
-
-    </div>
+      <ProductButtons  counter={counter} increaseBy={increaseBy}  /> */}
+      </div>
+    </Provider>
   );
 };
